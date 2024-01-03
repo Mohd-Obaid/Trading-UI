@@ -12,6 +12,9 @@ pipeline {
         stage('Install npm prerequisites'){
             steps{
                 sh 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash'
+               // Source nvm and set up environment variables
+                sh 'export NVM_DIR="/var/lib/jenkins/.nvm"'
+                sh '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
                 sh 'source ~/.bashrc'
                 sh 'nvm install node'
                 sh 'nvm use node'
