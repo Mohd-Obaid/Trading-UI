@@ -11,6 +11,10 @@ pipeline {
 }
         stage('Install npm prerequisites'){
             steps{
+                sh 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash'
+                sh 'source ~/.bashrc'
+                sh 'nvm install node'
+                sh 'nvm use node'
                 sh'npm audit fix'
                 sh'npm install'
                 sh'npm run build'
