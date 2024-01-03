@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NVM_DIR = '/var/lib/jenkins/.nvm'
-        PATH = "${NVM_DIR}/current/bin:${PATH}"
+        PATH = "${tool 'Node.js'}/bin:${PATH}"
     }
 
     stages {
@@ -16,16 +15,13 @@ pipeline {
         stage('Install npm prerequisites') {
             steps {
                 script {
-                    // Install nvm
-                    sh 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash'
+                    // Use the Jenkins Node.js tool installation
+                    def nodeHome = tool 'Node.js'
+                    env.PATH = "${nodeHome}/bin:${env.PATH}"
 
-                    // Source nvm and set up environment variables
-                    sh 'export NVM_DIR="/var/lib/jenkins/.nvm"'
-                    sh '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
-
-                    // Install Node.js using nvm
-                    sh 'nvm install node'
-                    sh 'nvm use node'
+                    // Verify Node.js and npm installation
+                    sh 'node --version'
+                    sh 'npm --version'
 
                     // Navigate to the project directory
                     dir('path/to/your/project') {
