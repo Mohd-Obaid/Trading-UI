@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Install Node.js and npm') {
             steps {
-            sh 'sudo yum install -y nodejs npm'  // This command depends on your system's package manager
+            sh 'yum install -y nodejs npm'  // This command depends on your system's package manager
         }
         }
 
